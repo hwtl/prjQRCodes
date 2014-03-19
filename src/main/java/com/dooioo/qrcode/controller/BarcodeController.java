@@ -6,6 +6,7 @@ import com.dooioo.qrcode.util.BarcodeUtil;
 import com.dooioo.qrcode.util.WebPathUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,8 +53,9 @@ public class BarcodeController {
         File file = new File(WebPathUtils.getServerPath(request)+ATTACH+File.separator+prefix+".png");
         BarcodeUtil.writeToFile(BarcodeFormat.QR_CODE, qrCode.getContents(), qrCode.getWidth(), qrCode.getHeight(), file);
         qrCode.setFilePath(ATTACH + File.separator + file.getName());
-        response.setContentType("text/html; charset=UTF-8");
-        response.getWriter().write(qrCode.toString())   ;
+        response.setContentType("text/json; charset=UTF-8");
+        JSONObject jsonObject = JSONObject.fromObject(qrCode);
+        response.getWriter().write(jsonObject.toString());
     }
 
     @RequestMapping(value = "/getQRCode")
