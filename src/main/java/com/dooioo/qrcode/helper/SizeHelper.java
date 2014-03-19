@@ -13,7 +13,7 @@ import com.dooioo.qrcode.qrcodeEnum.SizeEnum;
 public class SizeHelper {
 
     public static QRCode setSize(QRCode qrCode){
-        switch (SizeEnum.valueOf(qrCode.getSize())){
+        switch (SizeEnum.valueOf(qrCode.getSize().toUpperCase())){
             case  S:
                 qrCode.setHeight(SizeEnum.S.getValue());
                 qrCode.setWidth(SizeEnum.S.getValue());

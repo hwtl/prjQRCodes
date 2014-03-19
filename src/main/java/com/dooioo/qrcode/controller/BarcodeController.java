@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -51,7 +52,8 @@ public class BarcodeController {
         String prefix = new SimpleDateFormat("yyyyMMddHHmmSSS").format(new Date());
         File file = new File(WebPathUtils.getServerPath(request)+ATTACH+File.separator+prefix+".png");
         BarcodeUtil.writeToFile(BarcodeFormat.QR_CODE, qrCode.getContents(), qrCode.getWidth(), qrCode.getHeight(), file);
-        qrCode.setFilePath(ATTACH+File.separator+file.getName());
+        qrCode.setFilePath(ATTACH + File.separator + file.getName());
+        response.setContentType("text/html; charset=UTF-8");
         response.getWriter().write(qrCode.toString())   ;
     }
 
